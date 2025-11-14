@@ -6,7 +6,7 @@ from DataStructures.Graph import vertex as vtx
 
 def new_graph(order):
     graph = {
-        "vertices": mlp.new_map(order, 0.5),  # load_factor = 0.5 como en el ejemplo
+        "vertices": mlp.new_map(order, 0.5),  # load_factor = 0.5 
         "num_edges": 0
     }
 
