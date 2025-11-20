@@ -47,7 +47,7 @@ def dfs_vertex(my_graph, vertex, dfo):
     # agregar en postorden
     queue.enqueue(dfo["post"], vertex)
 
-    # agregar en reverso postorden (para top sort)
+    # agregar en reverso postorden
     stack.push(dfo["reversepost"], vertex)
     
     
@@ -63,7 +63,7 @@ def path_to(vertex, dfo):
     Retorna una pila con el camino desde el origen hasta vertex.
     """
 
-    # si no hay camino → None
+    # si no hay camino None
     if not has_path_to(vertex, dfo):
         return None
 
