@@ -15,8 +15,12 @@ def dfs(my_graph, source):
     # crear la estructura
     dfo = new_dfo_structure(G.order(my_graph))
 
+    dfo["edge_to"] = map.new_map(G.order(my_graph),0.5)
+    
     dfs_vertex(my_graph, source, dfo)
 
+    dfo["source"] = source
+    
     return dfo
 
 
@@ -36,6 +40,7 @@ def dfs_vertex(my_graph, vertex, dfo):
     adjs = G.adjacents(my_graph, vertex)
     for w in adjs["elements"]:
         if not map.contains(dfo["marked"], w):
+            map.put(dfo["edge_to"], w, vertex)
             dfs_vertex(my_graph, w, dfo)
 
 
@@ -50,8 +55,6 @@ def has_path_to(vertex, dfo):
     """
     Retorna True si vertex fue visitado.
     """
-
-    # si está marcado : hay camino
     return map.contains(dfo["marked"], vertex)
 
 
@@ -66,13 +69,15 @@ def path_to(vertex, dfo):
 
     # crear pila vacia
     path = stack.new_stack()
-    node = dfo["reversepost"]["first"]
 
-    while node is not None:
-        v = node["info"]
-        stack.push(path, v)
-        if v == vertex:
-            break
-        node = node["next"]
+    current = vertex
+    source = dfo["source"]
+    
+    while current != source:
+        stack.push(path, current)
+        current = map.get(dfo["edge_to"], current)
+
+    # agregar la fuente al inicio
+    stack.push(path, source)
 
     return path
