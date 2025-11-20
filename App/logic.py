@@ -31,7 +31,9 @@
 from DataStructures.List import single_linked_list as lt
 from DataStructures.List import array_list as al
 from DataStructures.Map import map_linear_probing as m
+from DataStructures.Stack import stack as st
 from DataStructures.Graph import digraph as G
+from DataStructures.Graph import dfs as DFS
 
 import csv
 import time
@@ -279,10 +281,25 @@ def get_most_concurrent_stops(analyzer):
 
 def get_route_between_stops_dfs(analyzer, stop1, stop2):
     """
-    Obtener la ruta entre dos parada usando dfs
+    Obtener la ruta entre dos paradas usando DFS.
     """
-    # TODO: Obtener la ruta entre dos parada usando dfs
-    ...
+
+    # ejecutar DFS desde la parada origen
+    dfo = DFS.dfs(analyzer["connections"], stop1)
+
+    # verificar si hay camino
+    if not DFS.has_path_to(stop2, dfo):
+        return None
+
+    # obtener el camino
+    path_stack = DFS.path_to(stop2, dfo)
+
+    # convertir la pila
+    ruta = []
+    while not st.is_empty(path_stack):
+        ruta.append(st.pop(path_stack))
+
+    return ruta[::-1]
 
 def get_route_between_stops_bfs(analyzer, stop1, stop2):
     """

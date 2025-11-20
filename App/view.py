@@ -84,9 +84,22 @@ def option_two(cont):
         print(f"- Parada: {stop_id}, conexiones salientes: {degree}")
     
 
+
 def option_three(cont):
-    # TODO: Imprimir los resultados de la opción 3
-    ...
+    print("Ingrese parada origen:")
+    origin = input("> ")
+
+    print("Ingrese parada destino:")
+    destination = input("> ")
+
+    ruta = logic.get_route_between_stops_dfs(cont, origin, destination)
+
+    if ruta is None:
+        print("No existe ruta entre las paradas.")
+    else:
+        print("Ruta encontrada (DFS):")
+        
+        imprimir_ruta_formateada(ruta)
 
 def option_four(cont):
     # TODO: Imprimir los resultados de la opción 4
@@ -100,6 +113,31 @@ def option_six(cont):
     # (Opcional) TODO: Imprimir los resultados de la opción 6
     ...
 
+def imprimir_ruta_formateada(paradas):
+    ruta_actual = []
+    bus_actual = paradas[0].split("-")[1]
+    parada_inicio = paradas[0].split("-")[0]
+    
+    print(f"--- Tomar el bus '{bus_actual}' desde '{parada_inicio}' ---")
+    
+    for bus_stop in paradas:
+        bus = bus_stop.split("-")[1]
+        parada = bus_stop.split("-")[0]
+        if bus != bus_actual:
+            # Imprimir ruta del bus anterior
+            print(" > ".join(ruta_actual))
+            last_parada = ruta_actual[-1]
+            
+            print(f"--- Cambiar el bus '{bus}' desde '{last_parada}' ---")
+
+            # Reiniciar la ruta
+            ruta_actual = []
+            bus_actual = bus
+        
+        ruta_actual.append(parada)
+    
+    print(" > ".join(ruta_actual))
+    
 
 """
 Menu principal
