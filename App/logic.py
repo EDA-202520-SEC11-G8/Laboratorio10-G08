@@ -262,7 +262,6 @@ def get_most_concurrent_stops(analyzer):
         deg = G.degree(graph, key)
         
         lt.add_last(resultados, (key, deg))
-    print("ok")
     def compare(e1, e2):
         return e1[1] > e2[1]
     resultados = lt.merge_sort(resultados, compare)
