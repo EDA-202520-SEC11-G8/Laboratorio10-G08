@@ -29,6 +29,7 @@ import sys
 import threading
 from App import logic
 
+import DataStructures.List.array_list as lt
 """
 La vista se encarga de la interacción con el usuario.
 Presenta el menu de opciones  y  por cada seleccion
@@ -74,8 +75,14 @@ def option_one(cont):
     print('El limite de recursion actual: ' + str(sys.getrecursionlimit()))
 
 def option_two(cont):
-    # TODO: Imprimir los resultados de la opción 2
-    ...
+    print("\nBuscando las paradas más concurridas...\n")
+    top = logic.get_most_concurrent_stops(cont)
+    print("Top 5 paradas con más conexiones:\n")
+    for i in range(lt.size(top)):
+        elem = lt.get_element(top, i)
+        stop_id, degree = elem
+        print(f"- Parada: {stop_id}, conexiones salientes: {degree}")
+    
 
 def option_three(cont):
     # TODO: Imprimir los resultados de la opción 3

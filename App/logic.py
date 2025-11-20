@@ -29,6 +29,7 @@
 # ___________________________________________________
 
 from DataStructures.List import single_linked_list as lt
+from DataStructures.List import array_list as al
 from DataStructures.Map import map_linear_probing as m
 from DataStructures.Graph import digraph as G
 
@@ -252,8 +253,30 @@ def get_most_concurrent_stops(analyzer):
     """
     Obtiene las 5 paradas más concurridas
     """
-    # TODO: Obtener las 5 paradas más concurridas, es decir, con más arcos salientes
-    ...
+    graph = analyzer["connections"]
+    verts = G.vertices(graph)
+    resultados = lt.new_list()
+    
+    for i in range(m.size(verts)):
+        key = verts["elements"][i]
+        deg = G.degree(graph, key)
+        
+        lt.add_last(resultados, (key, deg))
+    print("ok")
+    def compare(e1, e2):
+        return e1[1] > e2[1]
+    resultados = lt.merge_sort(resultados, compare)
+    
+    top5 = al.new_list()
+
+    limite = min(5, lt.size(resultados))
+
+    for i in range(limite):
+        al.add_last(top5, lt.get_element(resultados, i))
+        
+    return top5
+        
+    
 
 def get_route_between_stops_dfs(analyzer, stop1, stop2):
     """

@@ -65,3 +65,87 @@ def size(my_graph):
     Retorna el número de aristas del grafo.
     """
     return my_graph["num_edges"]
+
+
+def degree(my_graph, key_u):
+    """
+    Retorna el grado (número de arcos salientes) del vértice key_u.
+    """
+    vertex = mlp.get(my_graph["vertices"], key_u)
+    if vertex is None:
+        return 0  # No existe
+
+    return vtx.degree(vertex)
+
+
+def adjacents(my_graph, key_u):
+    """
+    Retorna una lista con las llaves de los vértices adyacentes a key_u.
+    """
+    vertex = mlp.get(my_graph["vertices"], key_u)
+    if vertex is None:
+        raise Exception("El vertice no existe")
+    
+    adj_map = vtx.get_adjacents(vertex)
+
+    
+    return mlp.key_set(adj_map)
+
+def vertices(my_graph):
+    """
+    Retorna una array_list con las llaves de todos los vertices.
+    """
+    # Obtener los vertices del grafo
+    vertices_map = my_graph["vertices"]
+
+    return mlp.key_set(vertices_map)
+
+def edges_vertex(my_graph, key_u):
+    """
+    Retorna una lista con todos los arcos del vertice key_u.
+    """
+    vertex = mlp.get(my_graph["vertices"], key_u)
+    if vertex is None:
+        raise Exception("El vertice no existe")
+
+    adj_map = vertex["adjacents"]
+    return mlp.value_set(adj_map)
+
+def get_vertex(my_graph, key_u):
+    """
+    Retorna el vertice completo con llave key_u.
+    """
+    return mlp.get(my_graph["vertices"], key_u)
+
+def get_vertex_information(my_graph, key_u):
+    """
+    Retorna la informacion (value) del vertice con llave key_u.
+    """
+    vertex = mlp.get(my_graph["vertices"], key_u)
+
+    if vertex is None:
+        raise Exception("El vertice no existe")
+
+    return vertex["value"]
+
+
+def update_vertex_info(my_graph, key_u, new_info_u):
+    """
+    Actualiza la informacion del vertice key_u.
+    """
+    vertices_map = my_graph["vertices"]
+
+    # Buscar el vertice
+    vertex = mlp.get(vertices_map, key_u)
+
+    if vertex is None:
+        return my_graph
+
+    vertex["value"] = new_info_u
+
+    # Guardar el vertice actualizado en el mapa
+    vertices_map = mlp.put(vertices_map, key_u, vertex)
+    my_graph["vertices"] = vertices_map
+
+    return my_graph
+

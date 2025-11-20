@@ -294,7 +294,7 @@ def merge(left, right, cmp_function):
 
     return result
 
-def merge_sort(my_list, cmp_function):
+def merge_sort(my_list, cmp_function= default_sort_criteria):
     """
     Ordena un array_list usando Merge Sort (recursivo).
     my_list: Single linked List
@@ -354,3 +354,11 @@ def quick_sort(my_list, cmp_function):
         add_last(result, get_element(right_sorted, i))
         
     return result
+
+def default_function(elemen_1, element_2):
+
+   if elemen_1 > element_2:
+      return 1
+   elif elemen_1 < element_2:
+      return -1
+   return 0
