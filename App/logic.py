@@ -34,10 +34,13 @@ from DataStructures.Map import map_linear_probing as m
 from DataStructures.Stack import stack as st
 from DataStructures.Graph import digraph as G
 from DataStructures.Graph import dfs as DFS
+from DataStructures.Graph import bfs as BFS
+from DataStructures.Graph import dijsktra as DIJKSTRA
 
 import csv
 import time
 import os
+import math
 
 data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/'
 
@@ -303,19 +306,52 @@ def get_route_between_stops_dfs(analyzer, stop1, stop2):
 
 def get_route_between_stops_bfs(analyzer, stop1, stop2):
     """
-    Obtener la ruta entre dos parada usando bfs
+    Obtener la ruta entre dos paradas usando BFS.
     """
-    # TODO: Obtener la ruta entre dos parada usando bfs
-    ...
+    # Ejecutar BFS desde la parada origen
+    bfo = BFS.bfs(analyzer["connections"], stop1)
+
+    # Verificar si hay camino
+    if not BFS.has_path_to(stop2, bfo):
+        return None
+
+    # Obtener el camino
+    path_stack = BFS.path_to(stop2, bfo)
+
+    # Convertir la pila a array_list
+    ruta = al.new_list()
+    while not st.is_empty(path_stack):
+        elemento = st.pop(path_stack)
+        al.add_first(ruta, elemento)
+
+    return ruta
 
 def get_shortest_route_between_stops(analyzer, stop1, stop2):
     """
-    Obtener la ruta mínima entre dos paradas
+    Obtener la ruta mínima entre dos paradas.
+    
+    Nota: Se guarda en analyzer['paths'] el resultado del algoritmo de Dijkstra
     """
-    # TODO: Obtener la ruta mínima entre dos paradas
-    # Nota: Tenga en cuenta que el debe guardar en la llave
-    #       analyzer['paths'] el resultado del algoritmo de Dijkstra
-    ...
+    # Ejecutar Dijkstra desde la parada origen
+    analyzer['paths'] = DIJKSTRA.dijkstra(analyzer["connections"], stop1)
+
+    # Verificar si hay camino
+    if not DIJKSTRA.has_path_to(analyzer['paths'], stop2):
+        return None
+
+    # Obtener el camino
+    path_stack = DIJKSTRA.path_to(stop2, analyzer['paths'])
+
+    # Obtener la distancia total
+    distance = DIJKSTRA.dist_to(analyzer['paths'], stop2)
+
+    # Convertir la pila
+    ruta = []
+    while not st.is_empty(path_stack):
+        edge = st.pop(path_stack)
+        ruta.append(edge)
+
+    return ruta[::-1], distance
 
 def show_calculated_shortest_route(analyzer, destination_stop):
     # (Opcional) TODO: Mostrar en un mapa la ruta mínima entre dos paradas usando folium

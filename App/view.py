@@ -102,12 +102,51 @@ def option_three(cont):
         imprimir_ruta_formateada(ruta)
 
 def option_four(cont):
-    # TODO: Imprimir los resultados de la opción 4
-    ...
+    print("Ingrese parada origen:")
+    origin = input("> ")
+
+    print("Ingrese parada destino:")
+    destination = input("> ")
+
+    ruta = logic.get_route_between_stops_bfs(cont, origin, destination)
+
+    if ruta is None:
+        print("No existe ruta entre las paradas.")
+    else:
+        print("Ruta encontrada (BFS):")
+        # Convertir array_list de la lógica a lista normal:
+        paradas = []
+        for i in range(lt.size(ruta)):
+            paradas.append(lt.get_element(ruta, i))
+
+        imprimir_ruta_formateada(paradas)
 
 def option_five(cont):
-    # TODO: Imprimir los resultados de la opción 5
-    ...
+    print("Ingrese parada origen:")
+    origin = input("> ")
+
+    print("Ingrese parada destino:")
+    destination = input("> ")
+
+    resultado = logic.get_shortest_route_between_stops(cont, origin, destination)
+
+    if resultado is None:
+        print("No existe ruta mínima entre las paradas.")
+        return
+
+    ruta, distancia = resultado
+
+    print(f"Ruta mínima encontrada (Dijkstra):")
+    print(f"Distancia total: {distancia:.2f} km\n")
+
+    # La ruta que retorna Dijkstra es una lista de arcos (tuplas u objetos)
+    paradas = []
+    for edge in ruta:
+        # edge = (start, end, weight)  <-- típico formato en su implementación
+        # Necesitamos extraer el nombre del vértice destino
+        paradas.append(edge[1])
+
+    imprimir_ruta_formateada(paradas)
 
 def option_six(cont):
     # (Opcional) TODO: Imprimir los resultados de la opción 6

@@ -1,4 +1,4 @@
-from DataStructures.Priority_queue import pq_entry as pqe
+from DataStructures.Map import pq_entry as pqe
 from DataStructures.List import array_list as al
 
 def new_heap(is_min_pq=True):

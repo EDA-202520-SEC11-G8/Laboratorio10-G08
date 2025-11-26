@@ -1,5 +1,5 @@
 from DataStructures.Map import map_linear_probing as mp
-from DataStructures.Priority_queue import priority_queue as pq
+from DataStructures.Map import priority_queue as pq
 
 
 def new_dijsktra_structure(source, g_order):
