@@ -140,12 +140,7 @@ def option_five(cont):
     print(f"Distancia total: {distancia:.2f} km\n")
 
     # La ruta que retorna Dijkstra es una lista de arcos (tuplas u objetos)
-    paradas = []
-    for edge in ruta:
-        # el nombre del vértice destino
-        paradas.append(edge["to"])
-
-    imprimir_ruta_formateada(paradas[::-1])
+    imprimir_ruta_formateada(ruta)
 
 def option_six(cont):
     # (Opcional) TODO: Imprimir los resultados de la opción 6

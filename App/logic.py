@@ -340,7 +340,6 @@ def get_shortest_route_between_stops(analyzer, stop1, stop2):
 
     # Obtener el camino
     path_stack = DIJKSTRA.path_to(stop2, analyzer['paths'])
-
     # Obtener la distancia total
     distance = DIJKSTRA.dist_to(stop2, analyzer['paths'])
 
@@ -349,8 +348,7 @@ def get_shortest_route_between_stops(analyzer, stop1, stop2):
     while not st.is_empty(path_stack):
         edge = st.pop(path_stack)
         ruta.append(edge)
-
-    return ruta[::-1], distance
+    return ruta, distance
 
 def show_calculated_shortest_route(analyzer, destination_stop):
     # (Opcional) TODO: Mostrar en un mapa la ruta mínima entre dos paradas usando folium

@@ -93,13 +93,10 @@ def path_to(vertex, search):
     source = search["source"]
     visited = search["visited"]
 
-    while current != source:
-        v_info = map.get(visited, current)
-        edge = v_info["edge_from"]
-        if edge is None:
-            return None
-        stack.push(path, edge)
-        current = edge["from"]
-
-    stack.push(path, source)    
+    while True:
+        stack.push(path, current)
+        if current == source:
+            break
+        current = map.get(visited, current)["edge_from"]["from"]
+        
     return path
