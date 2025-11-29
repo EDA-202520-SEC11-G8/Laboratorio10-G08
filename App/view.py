@@ -142,11 +142,10 @@ def option_five(cont):
     # La ruta que retorna Dijkstra es una lista de arcos (tuplas u objetos)
     paradas = []
     for edge in ruta:
-        # edge = (start, end, weight)  <-- típico formato en su implementación
-        # Necesitamos extraer el nombre del vértice destino
-        paradas.append(edge[1])
+        # el nombre del vértice destino
+        paradas.append(edge["to"])
 
-    imprimir_ruta_formateada(paradas)
+    imprimir_ruta_formateada(paradas[::-1])
 
 def option_six(cont):
     # (Opcional) TODO: Imprimir los resultados de la opción 6

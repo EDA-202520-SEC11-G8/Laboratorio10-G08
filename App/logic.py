@@ -302,7 +302,7 @@ def get_route_between_stops_dfs(analyzer, stop1, stop2):
     while not st.is_empty(path_stack):
         ruta.append(st.pop(path_stack))
 
-    return ruta[::-1]
+    return ruta
 
 def get_route_between_stops_bfs(analyzer, stop1, stop2):
     """
@@ -334,16 +334,15 @@ def get_shortest_route_between_stops(analyzer, stop1, stop2):
     """
     # Ejecutar Dijkstra desde la parada origen
     analyzer['paths'] = DIJKSTRA.dijkstra(analyzer["connections"], stop1)
-
     # Verificar si hay camino
-    if not DIJKSTRA.has_path_to(analyzer['paths'], stop2):
+    if not DIJKSTRA.has_path_to(stop2, analyzer['paths']):
         return None
 
     # Obtener el camino
     path_stack = DIJKSTRA.path_to(stop2, analyzer['paths'])
 
     # Obtener la distancia total
-    distance = DIJKSTRA.dist_to(analyzer['paths'], stop2)
+    distance = DIJKSTRA.dist_to(stop2, analyzer['paths'])
 
     # Convertir la pila
     ruta = []

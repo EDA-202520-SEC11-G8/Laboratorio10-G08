@@ -34,7 +34,7 @@ def dijkstra(my_graph, source):
 
     while not pq.is_empty(heap):
 
-        dist_u, u = pq.remove(heap)
+        u = pq.remove(heap)
         u_info = map.get(visited, u)
 
         if u_info["marked"]:
@@ -47,7 +47,7 @@ def dijkstra(my_graph, source):
 
         for i in range(edges["size"]):
             edge = edges["elements"][i]
-            w = edge["vertexB"]
+            w = edge["to"]
             weight = edge["weight"]
 
             w_info = map.get(visited, w)
@@ -59,7 +59,11 @@ def dijkstra(my_graph, source):
 
             if new_dist < w_info["dist_to"]:
                 w_info["dist_to"] = new_dist
-                w_info["edge_from"] = edge
+                w_info["edge_from"] = {
+                    "from": u,
+                    "to": w,
+                    "weight": weight
+                }
                 map.put(visited, w, w_info)
 
                 if pq.contains(heap, w):
@@ -70,18 +74,18 @@ def dijkstra(my_graph, source):
     return search
 
 
-def has_path_to(search, vertex):
+def has_path_to(vertex,search):
     v_info = map.get(search["visited"], vertex)
     return v_info is not None and v_info["dist_to"] < math.inf
 
 
-def dist_to(search, vertex):
+def dist_to(vertex,search):
     v_info = map.get(search["visited"], vertex)
     return v_info["dist_to"]
 
 
-def path_to(search, vertex):
-    if not has_path_to(search, vertex):
+def path_to(vertex, search):
+    if not has_path_to(vertex, search):
         return None
 
     path = stack.new_stack()
@@ -95,6 +99,6 @@ def path_to(search, vertex):
         if edge is None:
             return None
         stack.push(path, edge)
-        current = edge["vertexA"]
+        current = edge["from"]
 
     return path
