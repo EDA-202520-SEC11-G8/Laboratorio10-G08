@@ -101,4 +101,5 @@ def path_to(vertex, search):
         stack.push(path, edge)
         current = edge["from"]
 
+    stack.push(path, source)    
     return path

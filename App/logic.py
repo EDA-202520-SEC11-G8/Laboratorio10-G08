@@ -322,7 +322,7 @@ def get_route_between_stops_bfs(analyzer, stop1, stop2):
     ruta = al.new_list()
     while not st.is_empty(path_stack):
         elemento = st.pop(path_stack)
-        al.add_first(ruta, elemento)
+        al.add_last(ruta, elemento)
 
     return ruta
 
